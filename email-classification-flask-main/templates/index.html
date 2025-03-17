@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Spam Classifier</title>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #e5e5e5;
+      color: #2c3e50;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .container {
+      background: #ffffff;
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 600px;
+      border-top: 5px solid #2a9d8f;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+      font-size: 28px;
+      font-weight: 700;
+      color: #2c3e50;
+      text-align: center;
+    }
+
+    label {
+      display: block;
+      font-weight: 600;
+      margin-top: 15px;
+      margin-bottom: 8px;
+      font-size: 14px;
+      color: #34495e;
+    }
+
+    input[type="text"],
+    textarea {
+      width: 100%;
+      padding: 12px 15px;
+      border: 1px solid #bdc3c7;
+      border-radius: 8px;
+      font-size: 14px;
+      color: #2c3e50;
+      background: #ecf0f1;
+      transition: border 0.3s;
+    }
+
+    input[type="text"]:focus,
+    textarea:focus {
+      border-color: #2a9d8f;
+      outline: none;
+      background: #ffffff;
+    }
+
+    textarea {
+      resize: none;
+      height: 100px;
+    }
+
+    button {
+      margin-top: 20px;
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 8px;
+      background: #2c3e50;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.2s;
+    }
+
+    button:hover {
+      background: #2a9d8f;
+      transform: translateY(-2px);
+    }
+
+    #result {
+      margin-top: 20px;
+      padding: 15px;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      display: none;
+    }
+
+    #result.spam {
+      background: #e74c3c;
+      color: white;
+    }
+
+    #result.not-spam {
+      background: #27ae60;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>📧 Spam Classifier</h1>
+    <form id="spamForm">
+      <label for="subject">Subject:</label>
+      <input type="text" id="subject" name="subject" placeholder="Enter email subject" required>
+
+      <label for="body">Body:</label>
+      <textarea id="body" name="body" placeholder="Enter email content" required></textarea>
+
+      <label for="sender">Sender:</label>
+      <input type="text" id="sender" name="sender" placeholder="Enter sender's email" required>
+
+      <button type="submit">Classify Email</button>
+    </form>
+
+    <div id="result"></div>
+  </div>
+
+  <script>
+    document.getElementById('spamForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+      
+      const subject = document.getElementById('subject').value.toLowerCase();
+      const body = document.getElementById('body').value.toLowerCase();
+      const sender = document.getElementById('sender').value.toLowerCase();
+      
+      let result = '';
+      let resultClass = '';
+
+      if (subject.includes('win') || body.includes('prize') || sender.includes('unknown')) {
+        result = 'This email is likely spam.';
+        resultClass = 'spam';
+      } else {
+        result = 'This email is not spam.';
+        resultClass = 'not-spam';
+      }
+
+      const resultDiv = document.getElementById('result');
+      resultDiv.style.display = 'block';
+      resultDiv.textContent = `Prediction: ${result}`;
+      resultDiv.className = resultClass;
+    });
+  </script>
+
+</body>
+</html>
